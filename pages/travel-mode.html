@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Mode - SHEGUARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-blue-600 p-6 text-white rounded-b-3xl shadow-lg mb-6">
+        <a href="dashboard.html" class="inline-block mb-4"><i class="fas fa-arrow-left"></i> Back</a>
+        <h1 class="text-2xl font-bold">Travel Safety</h1>
+        <p class="text-blue-200 text-sm">We'll watch over you until you arrive.</p>
+    </header>
+
+    <main class="px-6 flex-1 flex flex-col">
+
+        <!-- SETUP FORM -->
+        <div id="setupForm" class="bg-white p-6 rounded-2xl shadow-lg space-y-6">
+            <div>
+                <label class="font-bold text-gray-700 block mb-2">Destination</label>
+                <div class="flex items-center bg-gray-50 border border-gray-200 rounded-lg p-3">
+                    <i class="fas fa-map-marker-alt text-red-500 mr-3"></i>
+                    <input type="text" id="destination" placeholder="Home, Office..." class="bg-transparent w-full outline-none">
+                </div>
+            </div>
+
+            <div>
+                <label class="font-bold text-gray-700 block mb-2">Estimated Duration (Minutes)</label>
+                <div class="flex items-center bg-gray-50 border border-gray-200 rounded-lg p-3">
+                    <i class="fas fa-clock text-blue-500 mr-3"></i>
+                    <input type="number" id="duration" placeholder="30" class="bg-transparent w-full outline-none">
+                </div>
+            </div>
+
+            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 text-sm text-blue-800">
+                <i class="fas fa-info-circle mr-1"></i> 
+                If you don't mark "Arrived" by the end of the timer, we will alert your contacts.
+            </div>
+
+            <button onclick="startJourney()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition">
+                Start Journey
+            </button>
+        </div>
+
+        <!-- ACTIVE JOURNEY (Hidden) -->
+        <div id="activeJourney" class="hidden flex-1 flex flex-col items-center justify-center text-center">
+            
+            <div class="w-48 h-48 rounded-full border-8 border-blue-100 flex items-center justify-center relative mb-8">
+                <div class="absolute inset-0 border-8 border-blue-500 rounded-full border-t-transparent animate-spin" style="animation-duration: 3s;"></div>
+                <div>
+                    <p class="text-gray-400 text-sm">Remaining</p>
+                    <h2 id="timerDisplay" class="text-4xl font-mono font-bold text-blue-600">00:00</h2>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Heading to <span id="dispDest" class="text-blue-600">Home</span></h3>
+            <p class="text-gray-500 mb-8">Live location is being shared...</p>
+
+            <button onclick="safeArrive()" class="w-full bg-green-500 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-green-600 transition mb-4">
+                I HAVE ARRIVED SAFELY
+            </button>
+            
+            <button onclick="window.location.href='sos.html'" class="text-red-500 font-bold text-sm">
+                Emergency? Tap for SOS
+            </button>
+        </div>
+
+    </main>
+
+    <script>
+        let journeyInterval;
+
+        function startJourney() {
+            const dest = document.getElementById('destination').value;
+            const mins = document.getElementById('duration').value;
+
+            if(!dest || !mins) return alert("Please fill details");
+
+            document.getElementById('setupForm').classList.add('hidden');
+            document.getElementById('activeJourney').classList.remove('hidden');
+            document.getElementById('dispDest').innerText = dest;
+
+            let seconds = parseInt(mins) * 60;
+            
+            updateDisplay(seconds);
+
+            journeyInterval = setInterval(() => {
+                seconds--;
+                updateDisplay(seconds);
+
+                if(seconds <= 0) {
+                    clearInterval(journeyInterval);
+                    // Trigger SOS
+                    alert("TIME EXPIRED! Initiating SOS...");
+                    window.location.href = 'sos.html';
+                }
+            }, 1000); // Speed up for demo? No, keep real seconds.
+        }
+
+        function updateDisplay(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            document.getElementById('timerDisplay').innerText = 
+                `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+        }
+
+        function safeArrive() {
+            clearInterval(journeyInterval);
+            alert("Glad you're safe! Journey ended.");
+            location.reload();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Map - SHEGUARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 h-screen flex flex-col">
+    <header class="bg-indigo-600 p-4 text-white shadow flex items-center">
+        <a href="dashboard.html" class="mr-4"><i class="fas fa-arrow-left"></i></a>
+        <h1 class="font-bold">Live Safety Map</h1>
+    </header>
+    <div class="flex-1 bg-gray-200 flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#4f46e5 2px, transparent 2px); background-size: 30px 30px;"></div>
+        
+        <div class="text-center p-8 bg-white/80 backdrop-blur rounded-xl shadow-lg z-10">
+            <i class="fas fa-map-marked-alt text-6xl text-indigo-500 mb-4 animate-bounce"></i>
+            <h2 class="text-2xl font-bold text-gray-800">Tracking Active</h2>
+            <p class="text-gray-600">Your location is being shared with trusted contacts.</p>
+            <div class="mt-4 font-mono bg-gray-100 p-2 rounded">
+                12.9716° N, 77.5946° E
+            </div>
+        </div>
+
+        <!-- Mock Map Elements -->
+        <div class="absolute top-1/4 left-1/4 w-4 h-4 bg-blue-500 rounded-full animate-ping"></div>
+        <div class="absolute bottom-1/3 right-1/3 w-4 h-4 bg-red-500 rounded-full animate-ping" style="animation-delay: 0.5s"></div>
+    </div>
+</body>
+</html>

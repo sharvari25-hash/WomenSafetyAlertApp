@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SHEGUARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body class="bg-gray-50 min-h-screen pb-20 relative">
+
+    <!-- Header / Status Section -->
+    <header class="bg-gradient-to-r from-purple-600 to-indigo-600 pt-8 pb-16 px-6 rounded-b-[3rem] shadow-xl text-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+        
+        <div class="flex justify-between items-center mb-6 relative z-10">
+            <div>
+                <h1 class="text-2xl font-bold" id="userName">Hello, Sarah 👋</h1>
+                <p class="text-purple-200 text-sm">Stay safe today.</p>
+            </div>
+            <div class="glass p-2 rounded-full cursor-pointer hover:bg-white/20">
+                <img src="https://ui-avatars.com/api/?name=Sarah&background=random" class="w-10 h-10 rounded-full border-2 border-white">
+            </div>
+        </div>
+
+        <!-- Safety Status Card -->
+        <div class="glass p-6 rounded-2xl flex items-center justify-between glow-effect relative z-10">
+            <div>
+                <p class="text-xs text-purple-200 uppercase tracking-wider">Current Status</p>
+                <h2 class="text-3xl font-bold flex items-center mt-1">
+                    SAFE <i class="fas fa-check-circle text-green-400 ml-3 text-2xl"></i>
+                </h2>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-purple-200">Location Sharing</p>
+                <div class="flex items-center justify-end mt-1 text-green-300 font-semibold">
+                    <span class="animate-pulse mr-2">●</span> ON
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Features Grid -->
+    <main class="px-6 -mt-10 relative z-20">
+        
+        <!-- Big SOS Button -->
+        <div class="mb-6">
+            <button onclick="window.location.href='sos.html'" 
+                class="w-full bg-gradient-to-r from-red-500 to-red-600 text-white p-6 rounded-2xl shadow-lg shadow-red-500/30 flex items-center justify-between group transform transition hover:scale-[1.02] active:scale-95">
+                <div>
+                    <h3 class="text-2xl font-bold">SOS EMERGENCY</h3>
+                    <p class="text-red-100 text-sm">Tap to activate siren & alerts</p>
+                </div>
+                <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center group-hover:animate-ping">
+                    <i class="fas fa-bell text-2xl"></i>
+                </div>
+            </button>
+        </div>
+
+        <!-- Grid Menu -->
+        <div class="grid grid-cols-2 gap-4">
+            
+            <!-- Travel Mode -->
+            <a href="travel-mode.html" class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col items-center text-center">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-3">
+                    <i class="fas fa-route text-xl"></i>
+                </div>
+                <h4 class="font-bold text-gray-800">Travel Mode</h4>
+                <p class="text-xs text-gray-500 mt-1">Live tracking</p>
+            </a>
+
+            <!-- Contacts -->
+            <a href="contacts.html" class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col items-center text-center">
+                <div class="w-12 h-12 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mb-3">
+                    <i class="fas fa-user-friends text-xl"></i>
+                </div>
+                <h4 class="font-bold text-gray-800">Contacts</h4>
+                <p class="text-xs text-gray-500 mt-1">Manage network</p>
+            </a>
+
+            <!-- Fake Call -->
+            <a href="fake-call.html" class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col items-center text-center">
+                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-3">
+                    <i class="fas fa-phone-volume text-xl"></i>
+                </div>
+                <h4 class="font-bold text-gray-800">Fake Call</h4>
+                <p class="text-xs text-gray-500 mt-1">Simulate call</p>
+            </a>
+
+            <!-- Report Incident -->
+            <a href="report.html" class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col items-center text-center">
+                <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mb-3">
+                    <i class="fas fa-exclamation-circle text-xl"></i>
+                </div>
+                <h4 class="font-bold text-gray-800">Report</h4>
+                <p class="text-xs text-gray-500 mt-1">Log incident</p>
+            </a>
+            
+            <!-- Alert History -->
+            <a href="history.html" class="bg-white p-5 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col items-center text-center col-span-2">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="font-bold text-gray-800">Alert History</h4>
+                        <p class="text-xs text-gray-500">View past logs and audio recordings</p>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <!-- Bottom Nav (Mock) -->
+    <nav class="fixed bottom-0 w-full bg-white border-t border-gray-100 py-3 px-6 flex justify-between text-gray-400 text-xs shadow-lg z-50">
+        <a href="#" class="flex flex-col items-center text-purple-600">
+            <i class="fas fa-home text-xl mb-1"></i>
+            Home
+        </a>
+        <a href="map.html" class="flex flex-col items-center hover:text-purple-600">
+            <i class="fas fa-map-marked-alt text-xl mb-1"></i>
+            Map
+        </a>
+        <a href="../admin/admin-dashboard.html" class="flex flex-col items-center hover:text-purple-600">
+            <i class="fas fa-shield-alt text-xl mb-1"></i>
+            Admin
+        </a>
+        <a href="#" onclick="Storage.logout(); window.location.href='login.html'" class="flex flex-col items-center hover:text-purple-600">
+            <i class="fas fa-sign-out-alt text-xl mb-1"></i>
+            Logout
+        </a>
+    </nav>
+
+    <script src="../js/storage.js"></script>
+    <script>
+        // Load User Name
+        const user = Storage.getCurrentUser();
+        if(user) {
+            document.getElementById('userName').innerText = `Hello, ${user.name} 👋`;
+        }
+    </script>
+</body>
+</html>

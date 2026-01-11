@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts - SHEGUARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-pink-500 to-purple-600 p-6 pb-12 rounded-b-3xl shadow-lg text-white">
+        <div class="flex items-center">
+            <a href="dashboard.html" class="mr-4"><i class="fas fa-arrow-left text-xl"></i></a>
+            <h1 class="text-2xl font-bold">Trusted Contacts</h1>
+        </div>
+        <p class="text-pink-100 mt-2 text-sm">These people will be notified in an emergency.</p>
+    </header>
+
+    <main class="px-6 -mt-8">
+        
+        <!-- Add Contact Form -->
+        <div class="glass bg-white p-6 rounded-2xl shadow-lg mb-6">
+            <h3 class="font-bold text-gray-700 mb-4">Add New Contact</h3>
+            <form id="addContactForm" class="space-y-4">
+                <div>
+                    <input type="text" id="cName" placeholder="Name (e.g., Mom)" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 focus:outline-none focus:border-pink-500" required>
+                </div>
+                <div>
+                    <input type="tel" id="cPhone" placeholder="Phone Number" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 focus:outline-none focus:border-pink-500" required>
+                </div>
+                <button type="submit" class="w-full bg-pink-500 text-white font-bold py-3 rounded-lg hover:bg-pink-600 transition">
+                    <i class="fas fa-plus mr-2"></i> Add Contact
+                </button>
+            </form>
+        </div>
+
+        <!-- Contacts List -->
+        <div id="contactsList" class="space-y-3 pb-20">
+            <!-- Populated via JS -->
+            <div class="text-center text-gray-400 py-10">Loading contacts...</div>
+        </div>
+
+    </main>
+
+    <script src="../js/storage.js"></script>
+    <script>
+        function renderContacts() {
+            const list = document.getElementById('contactsList');
+            const contacts = Storage.getContacts();
+            
+            if(contacts.length === 0) {
+                list.innerHTML = '<div class="text-center text-gray-400 py-4">No contacts added yet.</div>';
+                return;
+            }
+
+            list.innerHTML = contacts.map(c => `
+                <div class="bg-white p-4 rounded-xl shadow-sm flex items-center justify-between border-l-4 ${c.isPrimary ? 'border-pink-500' : 'border-gray-300'}">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 mr-3">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">${c.name} ${c.isPrimary ? '<i class="fas fa-star text-yellow-400 text-xs ml-1"></i>' : ''}</h4>
+                            <p class="text-xs text-gray-500">${c.phone}</p>
+                        </div>
+                    </div>
+                    <button onclick="deleteContact('${c.phone}')" class="text-red-400 hover:text-red-600 p-2">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function deleteContact(phone) {
+            if(confirm('Remove this contact?')) {
+                Storage.removeContact(phone);
+                renderContacts();
+            }
+        }
+
+        document.getElementById('addContactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('cName').value;
+            const phone = document.getElementById('cPhone').value;
+            
+            Storage.addContact({ name, phone, isPrimary: false });
+            
+            e.target.reset();
+            renderContacts();
+        });
+
+        // Init
+        renderContacts();
+    </script>
+</body>
+</html>

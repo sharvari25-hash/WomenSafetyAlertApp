@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SHEGUARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <!-- Sidebar -->
+        <aside class="w-64 bg-indigo-900 text-white flex flex-col">
+            <div class="p-6 text-center border-b border-indigo-800">
+                <i class="fas fa-shield-heart text-4xl mb-2 text-pink-400"></i>
+                <h1 class="text-xl font-bold tracking-wider">SHEGUARD</h1>
+                <p class="text-xs text-indigo-300">Admin Panel</p>
+            </div>
+            <nav class="flex-1 p-4 space-y-2">
+                <a href="#" class="block py-3 px-4 bg-indigo-800 rounded-lg text-white"><i class="fas fa-chart-line mr-3"></i> Dashboard</a>
+                <a href="#" class="block py-3 px-4 text-indigo-300 hover:bg-indigo-800 hover:text-white rounded-lg transition"><i class="fas fa-users mr-3"></i> Users</a>
+                <a href="#" class="block py-3 px-4 text-indigo-300 hover:bg-indigo-800 hover:text-white rounded-lg transition"><i class="fas fa-exclamation-triangle mr-3"></i> Alerts</a>
+                <a href="#" class="block py-3 px-4 text-indigo-300 hover:bg-indigo-800 hover:text-white rounded-lg transition"><i class="fas fa-map-marked-alt mr-3"></i> Heatmap</a>
+            </nav>
+            <div class="p-4">
+                <a href="../pages/dashboard.html" class="block py-2 px-4 text-center border border-indigo-500 rounded text-sm hover:bg-indigo-800">Exit to App</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-y-auto">
+            
+            <header class="bg-white shadow-sm p-6 flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-gray-800">Overview</h2>
+                <button class="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-700">
+                    <i class="fas fa-download mr-2"></i> Export Report
+                </button>
+            </header>
+
+            <div class="p-8">
+                
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <!-- Card 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-pink-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase">Total Users</p>
+                                <h3 class="text-3xl font-bold text-gray-800">1,248</h3>
+                            </div>
+                            <div class="p-2 bg-pink-100 rounded text-pink-600"><i class="fas fa-users"></i></div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-red-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase">Active SOS</p>
+                                <h3 class="text-3xl font-bold text-red-600">3</h3>
+                            </div>
+                            <div class="p-2 bg-red-100 rounded text-red-600"><i class="fas fa-bell animate-pulse"></i></div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-orange-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase">Reports Today</p>
+                                <h3 class="text-3xl font-bold text-gray-800">12</h3>
+                            </div>
+                            <div class="p-2 bg-orange-100 rounded text-orange-600"><i class="fas fa-file-alt"></i></div>
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase">Safe Journeys</p>
+                                <h3 class="text-3xl font-bold text-gray-800">85%</h3>
+                            </div>
+                            <div class="p-2 bg-green-100 rounded text-green-600"><i class="fas fa-check"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Table -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-gray-100">
+                        <h3 class="font-bold text-gray-800">Recent Incidents</h3>
+                    </div>
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
+                            <tr>
+                                <th class="p-4">Type</th>
+                                <th class="p-4">Location</th>
+                                <th class="p-4">Time</th>
+                                <th class="p-4">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100" id="adminTable">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/storage.js"></script>
+    <script>
+        const reports = Storage.getReports();
+        const tbody = document.getElementById('adminTable');
+
+        if(reports.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-gray-400">No recent reports found.</td></tr>';
+        } else {
+            tbody.innerHTML = reports.slice(0, 5).map(r => `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-4 font-semibold text-gray-700">${r.type}</td>
+                    <td class="p-4 text-gray-500">${r.location}</td>
+                    <td class="p-4 text-gray-500">${r.date}</td>
+                    <td class="p-4"><span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs">Review</span></td>
+                </tr>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS ACTIVE - SHEGUARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <style>
+        .bg-flash {
+            animation: flash-red 0.5s infinite;
+        }
+        @keyframes flash-red {
+            0%, 100% { background-color: #ef4444; } /* Red-500 */
+            50% { background-color: #7f1d1d; } /* Red-900 */
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col items-center justify-center text-white bg-red-600 relative overflow-hidden transition-colors duration-100" id="body-bg">
+
+    <!-- Siren Animation Rings -->
+    <div class="absolute inset-0 flex items-center justify-center z-0">
+        <div class="w-64 h-64 border-4 border-white/30 rounded-full animate-ping absolute" style="animation-duration: 1s;"></div>
+        <div class="w-96 h-96 border-4 border-white/20 rounded-full animate-ping absolute" style="animation-duration: 1.5s;"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="z-10 text-center w-full max-w-md px-6">
+        
+        <div class="mb-8">
+            <i class="fas fa-bullhorn text-6xl animate-shake mb-4"></i>
+            <h1 class="text-4xl font-bold tracking-widest animate-pulse">SOS ACTIVE</h1>
+            <p class="text-red-100 mt-2">Alerting Emergency Contacts...</p>
+        </div>
+
+        <!-- Status Box -->
+        <div class="glass-dark p-6 rounded-2xl mb-8 text-left space-y-4">
+            <div class="flex items-center">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse mr-3"></div>
+                <span class="text-sm">Location Acquired: <span class="font-mono text-yellow-300">12.9716° N, 77.5946° E</span></span>
+            </div>
+            <div class="flex items-center">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse mr-3"></div>
+                <span class="text-sm">Siren: <span class="font-bold">LOUD</span></span>
+            </div>
+            <div class="flex items-center">
+                <div class="w-3 h-3 bg-yellow-500 rounded-full animate-pulse mr-3"></div>
+                <span class="text-sm" id="msgStatus">Sending SMS...</span>
+            </div>
+        </div>
+
+        <!-- Stop Button -->
+        <button id="stopBtn" class="w-full bg-white text-red-600 font-bold py-4 rounded-xl shadow-xl text-xl hover:bg-gray-100 transform active:scale-95 transition-all">
+            I AM SAFE (STOP)
+        </button>
+
+        <p class="mt-6 text-sm opacity-70">
+            Slide to cancel or enter PIN
+        </p>
+
+    </div>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/sos.js"></script>
+</body>
+</html>

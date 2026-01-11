@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Incident - SHEGUARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <header class="bg-orange-500 p-6 text-white rounded-b-3xl shadow-lg mb-6">
+        <a href="dashboard.html" class="inline-block mb-4"><i class="fas fa-arrow-left"></i> Back</a>
+        <h1 class="text-2xl font-bold">Report Incident</h1>
+        <p class="text-orange-100 text-sm">Help us identify unsafe zones.</p>
+    </header>
+
+    <main class="px-6">
+        
+        <form id="reportForm" class="bg-white p-6 rounded-2xl shadow-lg space-y-6">
+            
+            <div>
+                <label class="font-bold text-gray-700 block mb-2">Type of Incident</label>
+                <select id="type" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 outline-none focus:border-orange-500">
+                    <option value="Harassment">Harassment</option>
+                    <option value="Stalking">Stalking</option>
+                    <option value="Poor Lighting">Poor Lighting / Unsafe Area</option>
+                    <option value="Suspicious Activity">Suspicious Activity</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="font-bold text-gray-700 block mb-2">Description</label>
+                <textarea id="desc" rows="4" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 outline-none focus:border-orange-500" placeholder="Describe what happened..."></textarea>
+            </div>
+
+            <div>
+                <label class="font-bold text-gray-700 block mb-2">Location</label>
+                <div class="flex">
+                    <input type="text" id="location" value="Current Location (12.97, 77.59)" class="w-full bg-gray-100 text-gray-500 border border-gray-200 rounded-l-lg p-3" readonly>
+                    <button type="button" class="bg-orange-500 text-white px-4 rounded-r-lg">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-orange-500 text-white font-bold py-3 rounded-lg hover:bg-orange-600 transition shadow-lg">
+                Submit Report
+            </button>
+
+        </form>
+
+    </main>
+
+    <script src="../js/storage.js"></script>
+    <script>
+        document.getElementById('reportForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const report = {
+                id: Date.now(),
+                type: document.getElementById('type').value,
+                desc: document.getElementById('desc').value,
+                location: document.getElementById('location').value,
+                date: new Date().toLocaleDateString(),
+                status: 'Pending Review'
+            };
+
+            Storage.saveReport(report);
+            
+            alert("Report submitted anonymously. Thank you.");
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

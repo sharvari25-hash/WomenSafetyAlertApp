@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - SHEGUARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body class="h-screen w-screen bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600 flex items-center justify-center p-6">
+
+    <div class="w-full max-w-sm glass p-8 rounded-2xl shadow-2xl animate-slide-in">
+        
+        <div class="text-center mb-6">
+            <i class="fas fa-user-plus text-5xl text-white mb-4"></i>
+            <h2 class="text-3xl font-bold text-white">Create Account</h2>
+            <p class="text-pink-200">Join SHEGUARD today</p>
+        </div>
+
+        <form id="signupForm" class="space-y-4">
+            <div>
+                <label class="block text-pink-100 text-sm mb-1">Full Name</label>
+                <div class="relative">
+                    <i class="fas fa-user absolute left-4 top-3.5 text-pink-300"></i>
+                    <input type="text" id="name" class="w-full bg-white/10 border border-white/30 rounded-lg py-3 pl-12 pr-4 text-white placeholder-pink-200/50 focus:outline-none focus:border-pink-300 focus:bg-white/20 transition-all" placeholder="Sarah Doe" required>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-pink-100 text-sm mb-1">Email</label>
+                <div class="relative">
+                    <i class="fas fa-envelope absolute left-4 top-3.5 text-pink-300"></i>
+                    <input type="email" id="email" class="w-full bg-white/10 border border-white/30 rounded-lg py-3 pl-12 pr-4 text-white placeholder-pink-200/50 focus:outline-none focus:border-pink-300 focus:bg-white/20 transition-all" placeholder="sarah@example.com" required>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-pink-100 text-sm mb-1">Password</label>
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-4 top-3.5 text-pink-300"></i>
+                    <input type="password" id="password" class="w-full bg-white/10 border border-white/30 rounded-lg py-3 pl-12 pr-4 text-white placeholder-pink-200/50 focus:outline-none focus:border-pink-300 focus:bg-white/20 transition-all" placeholder="••••••••" required>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-white text-purple-600 font-bold py-3 rounded-lg shadow-lg hover:bg-pink-50 transform hover:scale-[1.02] transition-all mt-2">
+                CREATE ACCOUNT
+            </button>
+        </form>
+
+        <div class="mt-6 text-center text-pink-200 text-sm">
+            <div>
+                Already have an account? <a href="login.html" class="text-white font-bold hover:underline">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/storage.js"></script>
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if(name && email && password) {
+                // Save new user
+                const newUser = { name: name, email: email, phone: "0000000000" }; // Phone placeholder
+                Storage.saveUser(newUser);
+                Storage.set(DB_KEYS.CURRENT_USER, newUser);
+                
+                // Button feedback
+                const btn = this.querySelector('button');
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+                
+                setTimeout(() => {
+                    alert("Account created successfully!");
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>

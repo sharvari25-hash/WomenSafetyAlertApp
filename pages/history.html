@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History - SHEGUARD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <header class="bg-gray-800 p-6 text-white rounded-b-3xl shadow-lg mb-6">
+        <a href="dashboard.html" class="inline-block mb-4"><i class="fas fa-arrow-left"></i> Back</a>
+        <h1 class="text-2xl font-bold">Activity Log</h1>
+    </header>
+
+    <main class="px-6 space-y-4" id="logContainer">
+        <!-- Content populated by JS -->
+        <div class="text-center text-gray-400 mt-10">Loading logs...</div>
+    </main>
+
+    <script src="../js/storage.js"></script>
+    <script>
+        const alerts = Storage.getAlerts();
+        const reports = Storage.getReports();
+        
+        // Combine and sort by date (simplified, just rendering list)
+        const container = document.getElementById('logContainer');
+        
+        let html = '';
+
+        if(alerts.length === 0 && reports.length === 0) {
+            html = '<div class="text-center text-gray-400 mt-10">No activity recorded.</div>';
+        } else {
+            
+            alerts.forEach(a => {
+                html += `
+                <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-red-500 flex justify-between items-center">
+                    <div>
+                        <div class="text-xs text-gray-400 mb-1">${a.date} at ${a.time}</div>
+                        <h4 class="font-bold text-red-600">SOS ALERT</h4>
+                        <p class="text-xs text-gray-500">${a.location}</p>
+                    </div>
+                    <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full">${a.status}</span>
+                </div>`;
+            });
+
+            reports.forEach(r => {
+                html += `
+                <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-orange-500 flex justify-between items-center">
+                    <div>
+                        <div class="text-xs text-gray-400 mb-1">${r.date}</div>
+                        <h4 class="font-bold text-orange-600">REPORT: ${r.type}</h4>
+                        <p class="text-xs text-gray-500 truncate w-48">${r.desc}</p>
+                    </div>
+                    <span class="bg-orange-100 text-orange-600 text-xs px-2 py-1 rounded-full">Reported</span>
+                </div>`;
+            });
+        }
+
+        container.innerHTML = html;
+    </script>
+</body>
+</html>
